@@ -9,5 +9,6 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <string.h>
-
+void execute(char **commands);
+char *_strcpy(char *str);
 #endif
