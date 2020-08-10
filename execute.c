@@ -4,10 +4,10 @@
 * @commands: command to be excuted
 * Return: on error
 */
-void execute(char **commands)
+int execute(char **commands, char **env)
 {
 	pid_t my_exid;
-	int status;
+	int status = 0;
 
 	my_exid = fork();
 	if (my_exid == -1)
@@ -17,11 +17,13 @@ void execute(char **commands)
 	}
 	if (my_exid == 0)
 	{
-		if (execve(commands[0], commands, NULL) == -1)
+		if (execve(commands[0], commands, env) == -1)
 		{
-			perror("Errror:");
-			return;
+			perror("Error:");
+			return (1);
 		}
 	}
-	wait(&status);
+	else
+		wait(&status);
+	return (0);
 }
