@@ -11,7 +11,10 @@ int main(void)
 	char **commands;
 	extern char **environ;
 
+
+
 	buffer = (char *)malloc(bufsize * sizeof(char));
+
 	if (buffer == NULL)
 	{
 		perror("Unable to allocate buffer");
@@ -34,6 +37,7 @@ int main(void)
 			free(buffer);
 			return(0);
 		}
+
 		printf("($) ");
 		free_coms(commands);
 	}
