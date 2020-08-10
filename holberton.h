@@ -9,6 +9,11 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <string.h>
-void execute(char **commands);
+
+int execute(char **commands, char **env);
 char *_strcpy(char *str);
+int num_elems(char *buffer);
+char **set_elems(char *buffer, const char *delim, int n);
+void free_coms(char **commands, int n);
+
 #endif

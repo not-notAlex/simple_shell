@@ -5,11 +5,11 @@
 */
 int main(void)
 {
-	char *buffer, *cpybuf, *mand;
+	char *buffer;
 	size_t characters, check = -1, bufsize = 1024;
-	int i = 0, k = 0, arraysize = 0;
+	int i = 0, k = 0, comsize = 0;
 	char **commands;
-
+	char **env;
 	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL)
 	{
@@ -19,30 +19,18 @@ int main(void)
 	printf("($) ");
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
 	{
-		arraysize = 0, i = 0, k = 0;
+		i = 0, k = 0;
 		while (buffer[i])
 			i++;
 		buffer[i - 1] = '\0';
-		cpybuf = _strcpy(buffer);
-		mand = strtok(cpybuf, " ");
-		while (mand != NULL)
-		{
-			arraysize++;
-			mand = strtok(NULL, " ");
-		}
-		commands = malloc(sizeof(mand) * arraysize);
-		cpybuf = _strcpy(buffer);
-		mand = strtok(cpybuf, " ");
-		while (mand != NULL)
-		{
-			commands[k] = mand;
-			mand = strtok(NULL, " ");
-			k++;
-		}
-		execute(commands);
+		comsize = num_elems(buffer);
+		commands = malloc(sizeof(buffer) * comsize);
+		commands = set_elems(buffer, " ", comsize);
+		if (execute(commands, env))
+			return(0);
 		printf("($) ");
 		free(commands);
-		free(cpybuf);
 	}
+	printf("\n");
 	return (0);
 }
