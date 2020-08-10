@@ -5,10 +5,10 @@
 */
 int main(void)
 {
-	char *buffer, *paths;
+	char *buffer;
 	size_t characters, check = -1, bufsize = 1024;
 	int i = 0, k = 0, comsize = 0;
-	char **commands;
+	char **commands, **paths;
 	extern char **environ;
 
 
@@ -28,8 +28,7 @@ int main(void)
 		while (buffer[i])
 			i++;
 		buffer[i - 1] = '\0';
-		comsize = num_elems(buffer);
-		commands = malloc(sizeof(buffer) * comsize);
+		comsize = num_elems(buffer, " ");
 		commands = set_elems(buffer, " ", comsize);
 		if (check_sys(commands) && execute(commands, paths))
 		{
@@ -39,7 +38,7 @@ int main(void)
 		}
 
 		printf("($) ");
-		free_coms(commands);
+		/*free_coms(commands);*/
 	}
 	printf("\n");
 	free(buffer);

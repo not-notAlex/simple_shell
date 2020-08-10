@@ -10,10 +10,14 @@
 #include <sys/wait.h>
 #include <string.h>
 
-int execute(char **commands, char **env);
+int execute(char **commands, char **paths);
 char *_strcpy(char *str);
-int num_elems(char *buffer);
+char *_strcat(char *str1, char *str2);
+int num_elems(char *buffer, const char *delim);
 char **set_elems(char *buffer, const char *delim, int n);
-void free_coms(char **commands, int n);
+int check_sys(char **commands);
+void free_coms(char **commands);
+char **set_paths(char **env);
+int no_slash(char *str);
 
 #endif
