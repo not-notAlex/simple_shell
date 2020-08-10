@@ -5,17 +5,19 @@
 */
 int main(void)
 {
-	char *buffer;
+	char *buffer, *paths;
 	size_t characters, check = -1, bufsize = 1024;
 	int i = 0, k = 0, comsize = 0;
 	char **commands;
-	char **env;
+	extern char **environ;
+
 	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL)
 	{
 		perror("Unable to allocate buffer");
 		exit(1);
 	}
+	paths = set_paths(environ);
 	printf("($) ");
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
 	{
@@ -26,11 +28,16 @@ int main(void)
 		comsize = num_elems(buffer);
 		commands = malloc(sizeof(buffer) * comsize);
 		commands = set_elems(buffer, " ", comsize);
-		if (execute(commands, env))
+		if (check_sys(commands) && execute(commands, paths))
+		{
+			free_coms(commands);
+			free(buffer);
 			return(0);
+		}
 		printf("($) ");
-		free(commands);
+		free_coms(commands);
 	}
 	printf("\n");
+	free(buffer);
 	return (0);
 }
