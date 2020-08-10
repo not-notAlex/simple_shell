@@ -10,7 +10,9 @@ int main(void)
 	int i = 0, k = 0, comsize = 0;
 	char **commands;
 	char **env;
+
 	buffer = (char *)malloc(bufsize * sizeof(char));
+
 	if (buffer == NULL)
 	{
 		perror("Unable to allocate buffer");
@@ -27,7 +29,7 @@ int main(void)
 		commands = malloc(sizeof(buffer) * comsize);
 		commands = set_elems(buffer, " ", comsize);
 		if (execute(commands, env))
-			return(0);
+			return (0);
 		printf("($) ");
 		free(commands);
 	}
