@@ -4,7 +4,7 @@
 * @commands: command to be excuted
 * Return: on error
 */
-int execute(char **commands, char **env)
+int execute(char **commands, char *paths)
 {
 	pid_t my_exid;
 	int status = 0;
@@ -17,7 +17,7 @@ int execute(char **commands, char **env)
 	}
 	if (my_exid == 0)
 	{
-		if (execve(commands[0], commands, env) == -1)
+		if (execve(commands[0], commands, NULL) == -1)
 		{
 			perror("Error:");
 			return (1);
