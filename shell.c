@@ -7,7 +7,7 @@ int main(void)
 {
 	char *buffer;
 	size_t characters, check = -1, bufsize = 1024;
-	int i = 0, k = 0, comsize = 0;
+	int i = 0, k = 0, comsize = 0, c;
 	char **commands, **paths;
 	extern char **environ;
 
@@ -30,7 +30,9 @@ int main(void)
 		buffer[i - 1] = '\0';
 		comsize = num_elems(buffer, " ");
 		commands = set_elems(buffer, " ", comsize);
-		if (check_sys(commands) && execute(commands, paths))
+		c = check_sys(commands);
+		get_func(commands, environ);
+		if (c == 1 || execute(commands, paths))
 		{
 			free_coms(commands);
 			free(buffer);
@@ -38,7 +40,7 @@ int main(void)
 		}
 
 		printf("($) ");
-		/*free_coms(commands);*/
+		free_coms(commands);
 	}
 	printf("\n");
 	free(buffer);

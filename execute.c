@@ -24,9 +24,16 @@ int execute(char **commands, char **paths)
 			{
 				path_command = _strcat(paths[i], commands[0]);
 				if (stat(path_command, &st) == 0)
+				{
 					if (execve(path_command, commands, NULL) == -1)
 						perror("Error:");
+					break;
+				}
 				i++;
+				if (paths[i] == NULL)
+				{
+					perror("Error:");
+				}
 				free(path_command);
 			}
 		else if(execve(commands[0], commands, NULL) == -1)
