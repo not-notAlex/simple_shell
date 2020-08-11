@@ -19,5 +19,14 @@ int check_sys(char **commands);
 void free_coms(char **commands);
 char **set_paths(char **env);
 int no_slash(char *str);
+void get_func(char **commands, char **env);
+void print_environment(char **env);
+int _strcmp(char *str1, char *str2);
+
+typedef struct system_commands
+{
+	char *coms;
+	void (*f)(char **commands);
+} sys_coms;
 
 #endif

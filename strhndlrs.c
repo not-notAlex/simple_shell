@@ -12,7 +12,6 @@ char *_strcat(char *str1, char *str2)
 
 	k = _strln(str1);
 	size = k + _strln(str2);
-	printf("%d", size);
 	nwstr = malloc(size + 2);
 
 	for (i = 0; str1[i]; i++)
@@ -58,6 +57,20 @@ int _strln(char *str)
 
 	for (ind = 0; str[ind] != '\0'; ind++)
 		continue;
-	printf("%d", ind);
 	return (ind);
+}
+
+int _strcmp(char *str1, char *str2)
+{
+	int i = 0;
+
+	while (str1[i])
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	if (str1[i] != str2[i])
+		return (0);
+	return (1);
 }
