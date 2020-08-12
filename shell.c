@@ -21,28 +21,40 @@ int main(void)
 		exit(1);
 	}
 	paths = set_paths(environ);
-	printf("($) ");
+	if (isatty(STDIN_FILENO) != 0)
+	    write(STDOUT_FILENO, "($) ", 4);
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
 	{
 		i = 0, k = 0;
 		while (buffer[i])
 			i++;
+		if (i == 1)
+		{
+			if (isatty(STDIN_FILENO) != 0)
+				write(STDOUT_FILENO, "($) ", 4);
+			continue;
+		}
 		buffer[i - 1] = '\0';
 		comsize = num_elems(buffer, " ");
 		commands = set_elems(buffer, " ", comsize);
-		c = check_sys(commands);
-		get_func(commands, environ);
+		c = get_func(commands, environ);
+		if (c == 2)
+		{
+			write(STDOUT_FILENO, "($) ", 4);
+			continue;
+		}
 		if (c == 1 || execute(commands, paths))
 		{
 			free_coms(commands);
 			free(buffer);
 			return(0);
 		}
-
-		printf("($) ");
+		if (isatty(STDIN_FILENO) != 0)
+		write(STDOUT_FILENO, "($) ", 4);
 		free_coms(commands);
 	}
-	printf("\n");
+	if (isatty(STDIN_FILENO) != 0)
+		write(STDOUT_FILENO, "\n", 1);
 	free(buffer);
 	return (0);
 }

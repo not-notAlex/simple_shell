@@ -72,6 +72,7 @@ char **set_paths(char **env)
 	strcpy = _strcpy(env[i]);
 	ar = num_elems(strcpy, ":");
 	paths = set_elems(strcpy, ":", ar);
+	env[i] -= 5;
 	return (paths);
 }
 /**

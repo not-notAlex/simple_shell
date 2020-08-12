@@ -15,18 +15,19 @@ char *_strcpy(char *str);
 char *_strcat(char *str1, char *str2);
 int num_elems(char *buffer, const char *delim);
 char **set_elems(char *buffer, const char *delim, int n);
-int check_sys(char **commands);
 void free_coms(char **commands);
 char **set_paths(char **env);
 int no_slash(char *str);
-void get_func(char **commands, char **env);
-void print_environment(char **env);
+int get_func(char **commands, char **env);
+void print_environment(char **commands, char **env);
 int _strcmp(char *str1, char *str2);
+int _putchar(char c);
+void change_dir(char **commands, char **env);
 
 typedef struct system_commands
 {
 	char *coms;
-	void (*f)(char **commands);
+	void (*f)(char **commands, char **env);
 } sys_coms;
 
 #endif
