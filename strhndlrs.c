@@ -60,6 +60,12 @@ int _strln(char *str)
 	return (ind);
 }
 
+/**
+ * _strcmp - compares two strings
+ * @str1: first string
+ * @str2: second string
+ * Return: 1 if true, 0 if false
+ */
 int _strcmp(char *str1, char *str2)
 {
 	int i = 0;
