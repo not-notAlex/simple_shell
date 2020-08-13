@@ -2,6 +2,7 @@
 /**
 * execute - starts a child proccess to execute the command
 * @commands: command to be excuted
+* @paths: array of paths to execute upon
 * Return: on error
 */
 int execute(char **commands, char **paths)
@@ -20,7 +21,7 @@ int execute(char **commands, char **paths)
 	if (my_exid == 0)
 	{
 		if (no_slash(commands[i]))
-			while(paths[i])
+			while (paths[i])
 			{
 				path_command = _strcat(paths[i], commands[0]);
 				if (stat(path_command, &st) == 0)
@@ -36,7 +37,7 @@ int execute(char **commands, char **paths)
 				}
 				free(path_command);
 			}
-		else if(execve(commands[0], commands, NULL) == -1)
+		else if (execve(commands[0], commands, NULL) == -1)
 			perror("Error:");
 		return (1);
 	}
@@ -45,11 +46,17 @@ int execute(char **commands, char **paths)
 	return (0);
 }
 
+/**
+ * no_slash - determines if command has a slash
+ * @str: string to check
+ *
+ * Return: 1 if true 0 if false
+ */
 int no_slash(char *str)
 {
 	int i;
 
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '/')
 			return (0);

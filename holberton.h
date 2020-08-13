@@ -26,8 +26,16 @@ void change_dir(char **commands, char **env);
 int _strln(char *str);
 char *_strtok(char *str, const char *delim);
 void sigint_stop(int sig_num);
+int _atoi(char *str);
+void moveto_oldpwd(char **env);
+int execute_loop(char *buffer, char **env, char **paths);
 
-
+/**
+ * struct system_commands - pairs command name with function
+ * @coms: system command name
+ * @f: a system function
+ * Description: correctly pairs coms and funcs
+ */
 typedef struct system_commands
 {
 	char *coms;

@@ -83,7 +83,12 @@ void free_coms(char **command)
 {
 	free(command);
 }
-
+/**
+ * _atoi - converts string into an int
+ * @str: string to convert
+ *
+ * Return: resulting number
+ */
 int _atoi(char *str)
 {
 	int i, total = 0;
