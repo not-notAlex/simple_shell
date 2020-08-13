@@ -11,6 +11,8 @@ int main(void)
 	char **commands, **paths;
 	extern char **environ;
 
+	signal(SIGINT, sigint_stop);
+
 	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL)
 	{
@@ -44,6 +46,8 @@ int main(void)
 		{
 			free_coms(commands);
 			free(buffer);
+			if (c == 1 && commands[1] != NULL)
+				return (_atoi(commands[1]));
 			return(0);
 		}
 		if (isatty(STDIN_FILENO) != 0)
@@ -54,4 +58,11 @@ int main(void)
 		write(STDOUT_FILENO, "\n", 1);
 	free(buffer);
 	return (0);
+}
+
+void sigint_stop(int sig_num)
+{
+	signal(SIGINT, sigint_stop);
+	write(STDOUT_FILENO, "\n($) ", 5);
+	fflush(stdout);
 }

@@ -83,3 +83,16 @@ void free_coms(char **command)
 {
 	free(command);
 }
+
+int _atoi(char *str)
+{
+	int i, total = 0;
+
+	for (i = 0; str[i]; i++)
+	{
+		total *= 10;
+		total += (str[i] - 48);
+	}
+
+	return (total);
+}
