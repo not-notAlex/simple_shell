@@ -5,16 +5,15 @@
 */
 int main(void)
 {
-	char *buffer;
-	size_t characters, check = -1, bufsize = 1024;
-	int i = 0, k = 0, comsize = 0, c;
+	
+	size_t characters, check = -1, bufsize = 1024; char *buffer;
+	int i = 0, comsize = 0, c;
 	char **commands, **paths;
 	extern char **environ;
 
-
 	signal(SIGINT, sigint_stop);
-	buffer = (char *)malloc(bufsize * sizeof(char));
 
+	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL)
 	{
 		perror("Unable to allocate buffer");
@@ -25,7 +24,7 @@ int main(void)
 	    write(STDOUT_FILENO, "($) ", 4);
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
 	{
-		i = 0, k = 0;
+		i = 0;
 		while (buffer[i])
 			i++;
 		if (i == 1)

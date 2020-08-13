@@ -15,7 +15,7 @@ int execute(char **commands, char **paths)
 	if (my_exid == -1)
 	{
 		perror("Error:");
-		return;
+		return (0);
 	}
 	if (my_exid == 0)
 	{

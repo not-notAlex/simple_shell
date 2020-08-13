@@ -3,7 +3,7 @@
 void print_environment(char **commands, char **env)
 {
 	int i = 0, k = 0;
-
+	commands = commands;
 	while (env[i])
 	{
 		k = 0;
