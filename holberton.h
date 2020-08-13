@@ -23,6 +23,8 @@ void print_environment(char **commands, char **env);
 int _strcmp(char *str1, char *str2);
 int _putchar(char c);
 void change_dir(char **commands, char **env);
+char *_strtok(char *str, const char *delim);
+void sigint_stop(int sig_num);
 
 typedef struct system_commands
 {
