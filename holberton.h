@@ -23,7 +23,7 @@ void print_environment(char **commands, char **env);
 int _strcmp(char *str1, char *str2);
 int _putchar(char c);
 void change_dir(char **commands, char **env);
-
+int _strln(char *str);
 typedef struct system_commands
 {
 	char *coms;
