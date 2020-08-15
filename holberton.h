@@ -16,7 +16,7 @@ char *_strcat(char *str1, char *str2);
 int num_elems(char *buffer, const char *delim);
 char **set_elems(char *buffer, const char *delim, int n);
 void free_coms(char **commands);
-char **set_paths(char **env);
+char **set_paths(char **env, char *strcpy);
 int no_slash(char *str);
 int get_func(char **commands, char **env);
 void print_environment(char **commands, char **env);

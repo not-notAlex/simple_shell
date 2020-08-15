@@ -7,11 +7,10 @@
 */
 int num_elems(char *buffer, const char *delim)
 {
-	char *cpybuf, *mand;
+	char *mand;
 	int arraysize = 0;
 
-	cpybuf = _strcpy(buffer);
-	mand = strtok(cpybuf, delim);
+	mand = strtok(buffer, delim);
 	while (mand != NULL)
 	{
 		arraysize++;
@@ -28,11 +27,10 @@ int num_elems(char *buffer, const char *delim)
 */
 char **set_elems(char *buffer, const char *delim, int n)
 {
-	char *cpybuf, *mand, **elems;
+	char *mand, **elems;
 	int i = 0;
 
-	cpybuf = _strcpy(buffer);
-	mand = strtok(cpybuf, delim);
+	mand = strtok(buffer, delim);
 	elems = malloc(sizeof(mand) * (n + 1));
 	while (mand != NULL)
 	{
@@ -48,12 +46,11 @@ char **set_elems(char *buffer, const char *delim, int n)
 * @env: enviroment variables to pull path from
 * Return: path
 */
-char **set_paths(char **env)
+char **set_paths(char **env, char *strcpy)
 {
 	int i = 0, k = 0, ar = 0;
 	char *str = "PATH=";
 	char **paths;
-	char *strcpy;
 
 	while (env[i])
 	{
@@ -71,8 +68,11 @@ char **set_paths(char **env)
 	env[i] += 5;
 	strcpy = _strcpy(env[i]);
 	ar = num_elems(strcpy, ":");
+	free(strcpy);
+	strcpy = _strcpy(env[i]);
 	paths = set_elems(strcpy, ":", ar);
 	env[i] -= 5;
+	free(strcpy);
 	return (paths);
 }
 /**
@@ -81,7 +81,16 @@ char **set_paths(char **env)
 */
 void free_coms(char **command)
 {
-	free(command);
+	int i = 0;
+
+	if (command == NULL)
+		return;
+
+	while (command[i])
+	{
+		free(command[i]);
+		i++;
+	}
 }
 /**
  * _atoi - converts string into an int

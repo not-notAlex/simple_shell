@@ -39,10 +39,12 @@ int execute(char **commands, char **paths)
 			}
 		else if (execve(commands[0], commands, NULL) == -1)
 			perror("Error:");
+		free(path_command);
 		return (1);
 	}
 	else
 		wait(&status);
+	free(path_command);
 	return (0);
 }
 
