@@ -14,12 +14,11 @@ int main(int ac, char **av, char **env)
 	int exit_stat;
 
 	(void)ac;
-	(void)av;
 	signal(SIGINT, sigint_stop);
 	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL)
 	{
-		perror("Unable to allocate buffer");
+		perror(av[0]);
 		exit(1);
 	}
 	paths = set_paths(env);
@@ -27,7 +26,7 @@ int main(int ac, char **av, char **env)
 		write(STDOUT_FILENO, "($) ", 4);
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
 	{
-		exit_stat = execute_loop(buffer, env, paths);
+		exit_stat = execute_loop(buffer, env, paths, av);
 		if (exit_stat > -1)
 		{
 			free(buffer);
@@ -63,7 +62,7 @@ void sigint_stop(int sig_num)
  * @paths: paths to check for executables
  * Return: exit status
  */
-int execute_loop(char *buffer, char **env, char **paths)
+int execute_loop(char *buffer, char **env, char **paths, char **av)
 {
 	int i = 0, comsize = 0, c;
 	char **commands;
@@ -86,11 +85,12 @@ int execute_loop(char *buffer, char **env, char **paths)
 	c = get_func(commands, env);
 	if (c == 2)
 	{
-		write(STDOUT_FILENO, "($) ", 4);
+		if (isatty(STDIN_FILENO) != 0)
+			write(STDOUT_FILENO, "($) ", 4);
 		free_com(commands, cpybuf);
 		return (-1);
 	}
-	if (c == 1 || execute(commands, paths))
+	if (c == 1 || execute(commands, paths, av))
 	{
 		if (c == 1 && commands[1] != NULL)
 		{

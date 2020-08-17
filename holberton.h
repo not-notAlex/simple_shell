@@ -10,9 +10,9 @@
 #include <sys/wait.h>
 #include <string.h>
 
-int execute(char **commands, char **paths);
+int execute(char **commands, char **paths, char **agav);
 char *_strcpy(char *str);
-char *_strcat(char *str1, char *str2);
+char *_strcat(char *str1, char *str2, int check);
 int num_elems(char *buffer, const char *delim);
 char **set_elems(char *buffer, const char *delim, int n);
 void free_com(char **loca, char *tion);
@@ -28,7 +28,8 @@ char *_strtok(char *str, const char *delim);
 void sigint_stop(int sig_num);
 int _atoi(char *str);
 void moveto_oldpwd(char **env);
-int execute_loop(char *buffer, char **env, char **paths);
+int execute_loop(char *buffer, char **env, char **paths, char **av);
+void print_error(char **argv, char **commands);
 
 /**
  * struct system_commands - pairs command name with function
