@@ -9,7 +9,7 @@
 int main(int ac, char **av, char **env)
 {
 	size_t characters, check = -1, bufsize = 1024;
-	char *buffer, *strcpy;
+	char *buffer;
 	char **paths;
 	int exit_stat;
 
@@ -22,7 +22,7 @@ int main(int ac, char **av, char **env)
 		perror("Unable to allocate buffer");
 		exit(1);
 	}
-	paths = set_paths(env, strcpy);
+	paths = set_paths(env);
 	if (isatty(STDIN_FILENO) != 0)
 		write(STDOUT_FILENO, "($) ", 4);
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
@@ -87,8 +87,7 @@ int execute_loop(char *buffer, char **env, char **paths)
 	if (c == 2)
 	{
 		write(STDOUT_FILENO, "($) ", 4);
-		free(commands);
-		free(cpybuf);
+		free_com(commands, cpybuf);
 		return (-1);
 	}
 	if (c == 1 || execute(commands, paths))
@@ -96,17 +95,14 @@ int execute_loop(char *buffer, char **env, char **paths)
 		if (c == 1 && commands[1] != NULL)
 		{
 			c = _atoi(commands[1]);
-			free(commands);
-			free(cpybuf);
+			free_com(commands, cpybuf);
 			return (c);
 		}
-		free(commands);
-		free(cpybuf);
+		free_com(commands, cpybuf);
 		return (0);
 	}
 	if (isatty(STDIN_FILENO) != 0)
 		write(STDOUT_FILENO, "($) ", 4);
-	free(commands);
-	free(cpybuf);
+	free_com(commands, cpybuf);
 	return (-1);
 }
