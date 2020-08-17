@@ -46,10 +46,10 @@ char **set_elems(char *buffer, const char *delim, int n)
 * @env: enviroment variables to pull path from
 * Return: path
 */
-char **set_paths(char **env, char *strcpy)
+char **set_paths(char **env)
 {
 	int i = 0, k = 0, ar = 0;
-	char *str = "PATH=";
+	char *strcpy, *str = "PATH=";
 	char **paths;
 
 	while (env[i])
@@ -76,21 +76,14 @@ char **set_paths(char **env, char *strcpy)
 	return (paths);
 }
 /**
-* free_coms - frees the coms
-* @command: the commands to be freed
+* free_com - frees the com and the cpybuf
+* @loca: the commands to be freed
+* @tion: the cpybuf to be freed
 */
-void free_coms(char **command)
+void free_com(char **loca, char *tion)
 {
-	int i = 0;
-
-	if (command == NULL)
-		return;
-
-	while (command[i])
-	{
-		free(command[i]);
-		i++;
-	}
+	free(loca);
+	free(tion);
 }
 /**
  * _atoi - converts string into an int

@@ -42,9 +42,7 @@ int execute(char **commands, char **paths)
 		free(path_command);
 		return (1);
 	}
-	else
-		wait(&status);
-	free(path_command);
+	wait(&status);
 	return (0);
 }
 
