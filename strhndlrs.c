@@ -5,22 +5,34 @@
 * @str2: input string2
 * Return: returns concatted string
 */
-char *_strcat(char *str1, char *str2)
+char *_strcat(char *str1, char *str2, int check)
 {
 	int i, k = 0, size = 0;
 	char *nwstr;
 
 	k = _strln(str1);
 	size = k + _strln(str2);
-	nwstr = malloc(size + 2);
-
+	if (check == 1)
+		nwstr = malloc(size + 2);
+	else
+		nwstr = malloc(size + 1);
+	if (nwstr == NULL)
+		return (NULL);
 	for (i = 0; str1[i]; i++)
 		nwstr[i] = str1[i];
-	nwstr[i] = '/';
+	if (check == 1)
+		nwstr[i] = '/';
 	for (i = 0; str2[i]; i++)
-		nwstr[i + k + 1] = str2[i];
-
-	nwstr[i + k + 1] = '\0';
+	{
+		if (check == 1)
+			nwstr[i + k + 1] = str2[i];
+		else
+			nwstr[i + k] = str2[i];
+	}
+	if (check == 1)
+		nwstr[i + k + 1] = '\0';
+	else
+		nwstr[i + k] = '\0';
 	return (nwstr);
 }
 /**
