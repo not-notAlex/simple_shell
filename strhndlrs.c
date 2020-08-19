@@ -43,13 +43,12 @@ char *_strcat(char *str1, char *str2, int check)
 */
 char *_strcpy(char *str)
 {
-	int len = 0, i = 0;
+	int len, i = 0;
 	char *newstr;
 
 	if (str == NULL)
 		return (NULL);
-	while (str[len])
-		len++;
+	len = _strln(str);
 	newstr = malloc(len + 1);
 	if (newstr == NULL)
 		return (NULL);
