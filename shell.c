@@ -23,7 +23,7 @@ int main(int ac, char **av, char **env)
 	}
 	paths = set_paths(env);
 	if (isatty(STDIN_FILENO) != 0)
-		write(STDOUT_FILENO, "($) ", 4);
+		write(STDOUT_FILENO, "$ ", 2);
 	while ((characters = getline(&buffer, &bufsize, stdin)) != check)
 	{
 		exit_stat = execute_loop(buffer, env, paths, av);
@@ -51,7 +51,7 @@ void sigint_stop(int sig_num)
 {
 	(void)sig_num;
 	signal(SIGINT, sigint_stop);
-	write(STDOUT_FILENO, "\n($) ", 5);
+	write(STDOUT_FILENO, "\n$ ", 3);
 	fflush(stdout);
 }
 
@@ -60,20 +60,20 @@ void sigint_stop(int sig_num)
  * @buffer: input buffer
  * @env: environment variables
  * @paths: paths to check for executables
+ * @av: command arguments
  * Return: exit status
  */
 int execute_loop(char *buffer, char **env, char **paths, char **av)
 {
 	int i = 0, comsize = 0, c;
-	char **commands;
-	char *cpybuf;
+	char **commands, *cpybuf;
 
 	while (buffer[i])
 		i++;
 	if (i == 1)
 	{
 		if (isatty(STDIN_FILENO) != 0)
-			write(STDOUT_FILENO, "($) ", 4);
+			write(STDOUT_FILENO, "$ ", 2);
 		return (-1);
 	}
 	buffer[i - 1] = '\0';
@@ -86,7 +86,7 @@ int execute_loop(char *buffer, char **env, char **paths, char **av)
 	if (c == 2)
 	{
 		if (isatty(STDIN_FILENO) != 0)
-			write(STDOUT_FILENO, "($) ", 4);
+			write(STDOUT_FILENO, "$ ", 2);
 		free_com(commands, cpybuf);
 		return (-1);
 	}
@@ -102,7 +102,7 @@ int execute_loop(char *buffer, char **env, char **paths, char **av)
 		return (0);
 	}
 	if (isatty(STDIN_FILENO) != 0)
-		write(STDOUT_FILENO, "($) ", 4);
+		write(STDOUT_FILENO, "$ ", 2);
 	free_com(commands, cpybuf);
 	return (-1);
 }

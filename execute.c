@@ -3,14 +3,13 @@
 * execute - starts a child proccess to execute the command
 * @commands: command to be excuted
 * @paths: array of paths to execute upon
+* @argv: command arguments
 * Return: on error
 */
 int execute(char **commands, char **paths, char **argv)
 {
 	pid_t my_exid;
 	int status = 0, i = 0;
-	char *path_command;
-	struct stat st;
 
 	my_exid = fork();
 	if (my_exid == -1)
@@ -23,22 +22,8 @@ int execute(char **commands, char **paths, char **argv)
 		if (no_slash(commands[i]))
 			while (paths[i])
 			{
-				path_command = _strcat(paths[i], commands[0], 1);
-				if (stat(path_command, &st) == 0)
-				{
-					if (execve(path_command, commands, NULL) == -1)
-						perror(argv[0]);
-					break;
-				}
+				path_execute(paths, commands, argv, i);
 				i++;
-				if (paths[i] == NULL)
-				{
-					if (isatty(STDIN_FILENO) != 0)
-						perror(argv[0]);
-					else
-						print_error(argv, commands);
-				}
-				free(path_command);
 			}
 		else if (execve(commands[0], commands, NULL) == -1)
 		{
@@ -72,6 +57,12 @@ int no_slash(char *str)
 	return (1);
 }
 
+/**
+ * print_error - prints an error
+ * @argv: command arguments
+ * @commands: commands to run
+ * Return: no return
+ */
 void print_error(char **argv, char **commands)
 {
 	char *str;
@@ -83,4 +74,34 @@ void print_error(char **argv, char **commands)
 	len = _strln(str);
 	write(STDERR_FILENO, str, len);
 	free(str);
+}
+
+/**
+ * path_execute - executes commands for paths
+ * @path: paths to check
+ * @commands: commands to execute
+ * @argv: command arguments
+ * @i: index of loop
+ * Return: no return
+ */
+void path_execute(char **path, char **commands, char **argv, int i)
+{
+	char *path_command;
+	struct stat st;
+
+	path_command = _strcat(path[i], commands[0], 1);
+	if (stat(path_command, &st) == 0)
+	{
+		if (execve(path_command, commands, NULL) == -1)
+			perror(argv[0]);
+		return;
+	}
+	if (path[i + 1] == NULL)
+	{
+		if (isatty(STDIN_FILENO) != 0)
+			perror(argv[0]);
+		else
+			print_error(argv, commands);
+	}
+	free(path_command);
 }

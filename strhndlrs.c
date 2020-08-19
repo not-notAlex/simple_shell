@@ -3,6 +3,7 @@
 * _strcat - concats string
 * @str1: input string1
 * @str2: input string2
+* @check: checks for adding slash
 * Return: returns concatted string
 */
 char *_strcat(char *str1, char *str2, int check)

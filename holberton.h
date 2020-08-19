@@ -30,6 +30,7 @@ int _atoi(char *str);
 void moveto_oldpwd(char **env);
 int execute_loop(char *buffer, char **env, char **paths, char **av);
 void print_error(char **argv, char **commands);
+void path_execute(char **path, char **commands, char **argv, int i);
 
 /**
  * struct system_commands - pairs command name with function
