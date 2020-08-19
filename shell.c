@@ -90,7 +90,7 @@ int execute_loop(char *buffer, char **env, char **paths, char **av)
 		free_com(commands, cpybuf);
 		return (-1);
 	}
-	if (c == 1 || execute(commands, paths, av))
+	if (c == 1 || execute(commands, paths, av, env))
 	{
 		if (c == 1 && commands[1] != NULL)
 		{

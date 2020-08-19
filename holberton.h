@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 #include <string.h>
 
-int execute(char **commands, char **paths, char **agav);
+int execute(char **commands, char **paths, char **agav, char **env);
 char *_strcpy(char *str);
 char *_strcat(char *str1, char *str2, int check);
 int num_elems(char *buffer, const char *delim);
@@ -30,7 +30,7 @@ int _atoi(char *str);
 void moveto_oldpwd(char **env);
 int execute_loop(char *buffer, char **env, char **paths, char **av);
 void print_error(char **argv, char **commands);
-void path_execute(char **path, char **commands, char **argv, int i);
+void path_execute(char **path, char **commands, char **argv, int i, char **env);
 
 /**
  * struct system_commands - pairs command name with function

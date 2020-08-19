@@ -4,9 +4,10 @@
 * @commands: command to be excuted
 * @paths: array of paths to execute upon
 * @argv: command arguments
+* @env: environment varibales
 * Return: on error
 */
-int execute(char **commands, char **paths, char **argv)
+int execute(char **commands, char **paths, char **argv, char **env)
 {
 	pid_t my_exid;
 	int status = 0, i = 0;
@@ -22,10 +23,10 @@ int execute(char **commands, char **paths, char **argv)
 		if (no_slash(commands[i]))
 			while (paths[i])
 			{
-				path_execute(paths, commands, argv, i);
+				path_execute(paths, commands, argv, i, env);
 				i++;
 			}
-		else if (execve(commands[0], commands, NULL) == -1)
+		else if (execve(commands[0], commands, env) == -1)
 		{
 			if (isatty(STDIN_FILENO) != 0)
 				perror(argv[0]);
@@ -82,9 +83,10 @@ void print_error(char **argv, char **commands)
  * @commands: commands to execute
  * @argv: command arguments
  * @i: index of loop
+ * @env: environment veriables
  * Return: no return
  */
-void path_execute(char **path, char **commands, char **argv, int i)
+void path_execute(char **path, char **commands, char **argv, int i, char **env)
 {
 	char *path_command;
 	struct stat st;
@@ -92,7 +94,7 @@ void path_execute(char **path, char **commands, char **argv, int i)
 	path_command = _strcat(path[i], commands[0], 1);
 	if (stat(path_command, &st) == 0)
 	{
-		if (execve(path_command, commands, NULL) == -1)
+		if (execve(path_command, commands, env) == -1)
 			perror(argv[0]);
 		return;
 	}
