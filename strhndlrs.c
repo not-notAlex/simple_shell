@@ -14,9 +14,9 @@ char *_strcat(char *str1, char *str2, int check)
 	k = _strln(str1);
 	size = k + _strln(str2);
 	if (check == 1)
-		nwstr = malloc(size + 2);
+		nwstr = malloc(size + 3);
 	else
-		nwstr = malloc(size + 1);
+		nwstr = malloc(size + 2);
 	if (nwstr == NULL)
 		return (NULL);
 	for (i = 0; str1[i]; i++)
@@ -46,9 +46,11 @@ char *_strcpy(char *str)
 	int len = 0, i = 0;
 	char *newstr;
 
+	if (str == NULL)
+		return (NULL);
 	while (str[len])
 		len++;
-	newstr = malloc(len);
+	newstr = malloc(len + 1);
 	if (newstr == NULL)
 		return (NULL);
 	while (str[i])

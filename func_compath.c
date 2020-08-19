@@ -31,7 +31,7 @@ char **set_elems(char *buffer, const char *delim, int n)
 	int i = 0;
 
 	mand = strtok(buffer, delim);
-	elems = malloc(sizeof(mand) * (n + 1));
+	elems = malloc(sizeof(char *) * (n + 1));
 	while (mand != NULL)
 	{
 		elems[i] = mand;
