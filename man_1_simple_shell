@@ -1,0 +1,30 @@
+.TH hsh(1) "18 August 2020" "1.0" "hsh man page"
+.SH NAME
+hsh - A simple shell
+.SH SYNOPSIS
+Simple shell and command interpreter
+.SH DESCRIPTION
+This simple shell is a program that reads input or lines from the terminal, interprets them, and generally executes other programs.
+.SH Commands
+.SS The following are built-in commands:
+.RS
+.nf
+exit (#): Terminates the shell. A number can be used as a status to have the program return a value other than zero.
+env: Lists all of the current environment variables.
+cd: Changes the current working directory. Can be used with a dash to move to the previous directory. Without any arguments it will move the user to the directory listed in $HOME.
+.RE
+.SS For other commands:
+.RS
+If the user types in a command that is a non-built-in command the following procedure takes place. The program determines if the user specified a path to a command. If so, the shell runs that command and passes it any arguments the user may have used as well as the current environment variables. If the path was not specified, the shell checks all directories in $PATH for the specified command. If found, the shell executes that command, again with given arguments and environment variables. As such, the following commands are equivalent:
+.RE
+.RS
+/bin/ls - Prints the names of non-hidden files in the current directory
+.RE
+.RS
+ls - Prints the names of non-hidden files in the current directory
+.SH SEE ALSO
+.I sh(1)
+.SH BUGS
+Extraneous spaces may cause the program to crash.
+.SH AUTHOR
+David Duval and Alex Smith
